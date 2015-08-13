@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block pageCSS %}
+<link rel="stylesheet" href="//uw.edu/assets/uw.css"/>
+{% endblock %}
+
+{% block pageJS %}
+<script src="//uw.edu/assets/uw.js"></script>
+{% endblock %}
+
 {% block content %}
     <div class="section">
         <h1>Punchclock Report for {{user}}</h1>
@@ -8,9 +16,9 @@
         {% else %}
             <h2>{{ punchclock_message }}</h2>
         {% endif %}
-        <p>Any hours worked are displayed on the calendar. Click on a day to view shifts in detail</p>
+        <p>Any hours worked are displayed on the calendar. Click on a day to view shifts in detail!!!</p>
         <br />
-        <a class="btn-custom"  href='{%url Monthly-List-Shifts user year month %}'>Go To List View</a>
+        <a class="uw-btn btn-sm"  href='{%url Monthly-List-Shifts user year month %}'>Go To List View</a>
     </div>
     <div id="calendar">
         {% include "calendar_key.html" %}
