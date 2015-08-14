@@ -10,7 +10,7 @@
 
 {% block content %}
     <div class="section">
-        <h1>Punchclock Report for {{user}}</h1>
+        <h1>Punchclock Report for <mark>{{user}}</mark></h1>
         {% if is_a_punchclock %}
             <h2><a id="clock_in_or_out" href="/chronos/time/">{{ punchclock_message }}</a></h2>
         {% else %}
