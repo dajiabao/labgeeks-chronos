@@ -4,8 +4,8 @@
 
 <h1>Clock-in and out</h1>
 
-<h2>Welcome 
-<span class="user_name"> 
+<h2>Welcome
+<span class="user_name">
 {% if user.first_name %}
     {{ user.first_name }}!
 {% else %}
@@ -13,45 +13,68 @@
 {% endif %}
 
 </h2>
-{% if events or alerts %}
-  <div id='notificationwrap' style="margin:auto; width:80%">
-    {% if events %}
-        <div id="events" style="overflow:hidden;">
-        <h3>Events</h3>
-        {% for event in events %}
-            <div class="notification" style="float:left; margin-right: 10px;">
-                <h2>{% if can_Add %}<input type="checkbox" name="pk" value="{{event.pk}}">{% endif %}
-                {{event.due_date.month}}/{{event.due_date.day}} {{event.title}} </h2>
-                {% if event.user%}
-                    <p class="info"> {{event.user}} posted on {{event.date}} </p>
-                {% else %}
-                    <p class="info"> Labgeeks posted on {{event.date}} </p>
-                {% endif %}
-                <p> {{event.content}} </p>
-                <p> Due on {{event.due_date}}</p>
-            </div>
-        {% endfor %}
-        </div>
-    {% endif %}
+{%if events or alerts %}
+        {% if can_Add %}
+        <form method="post" action="" style="padding-top:0em"> {% csrf_token %}
+        {% endif %}
 
-    {% if alerts %}
-        <div id="alerts" style="overflow:hidden;">
-            <h3>Alerts</h3>
-            {% for alert in alerts %}
-                <div class="notification" style="float:left; margin-right: 10px;">
-                    <h2>{% if can_Add %}<input type="checkbox" name="pk" value="{{alert.pk}}">{% endif %}{{alert.title}} </h2>
-                    {% if alert.user%}
-                        <p class="info"> {{alert.user}} posted on {{alert.date}} </p>
+        {% if events %}
+            <h3>Events</h3>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            {% for event in events %}
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    {% if can_Add %}<input type="checkbox" name="pk" value="{{event.pk}}">{% endif %}
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">
+                      {{event.due_date.month}}/{{event.due_date.day}} {{event.title}}
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse{{forloop.counter}}" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    {% if event.user%}
+                        <p> {{event.user}} posted on {{event.date}} </p>
                     {% else %}
-                        <p class="info"> Labgeeks posted on {{alert.date}} </p>
+                        <p> Labgeeks posted on {{event.date}} </p>
+                    {% endif %}
+                    <p> {{event.content}} </p>
+                    <p> <mark>Due on {{event.due_date}} </mark></p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if alerts %}
+            <h3>Alerts</h3>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            {% for alert in alerts %}
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    {% if can_Add %}<input type="checkbox" name="pk" value="{{alert.pk}}">{% endif %}
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">
+                      {{alert.title}}
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse{{forloop.counter}}" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    {% if alert.user%}
+                        <p> {{alert.user}} posted on {{alert.date}} </p>
+                    {% else %}
+                        <p> Labgeeks posted on {{alert.date}} </p>
                     {% endif %}
                     <p> {{alert.content}} </p>
+                  </div>
                 </div>
+              </div>
             {% endfor %}
-        </div>
+            </div>
+        {% endif %}
     {% endif %}
-  </div>
-{% endif %}
 
 {% if errors %}
     <p class="highlight">
