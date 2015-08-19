@@ -84,10 +84,16 @@
 
 
 <form style="text-align: center;" action="" method="post">{% csrf_token %}
-    <label for="shiftnote">Notes about your shift:</label><br />
-    {{ form.shiftnote }}
-    <br />
-    <input type="submit" id="submit_button" class="btn btn-primary" value="Clock {{ in_or_out }}!" />
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <label for="shiftnote">Notes about your shift:</label>
+      </div>
+      <div class="panel-body">
+        {{ form.shiftnote }}
+        <br />
+        <input type="submit" id="submit_button" class="btn btn-primary" value="Clock {{ in_or_out }} !" />
+      </div>
+    </div>
 </form>
 
 {% endblock %}
