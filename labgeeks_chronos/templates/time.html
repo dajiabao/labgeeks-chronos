@@ -1,25 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container">
+  <div class="row">
+    <h1>Clock-in and out</h1>
+    <h2>Welcome
+    <span class="user_name mark">
+    {% if user.first_name %}
+        {{ user.first_name }}!
+    {% else %}
+        {{ user }}</span>!
+    {% endif %}
+    </h2>
+  </div>
 
-<h1>Clock-in and out</h1>
+  <div class="row">
+    <h3>Events</h3>
+  </div>
 
-<h2>Welcome
-<span class="user_name">
-{% if user.first_name %}
-    {{ user.first_name }}!
-{% else %}
-    {{ user }}</span>!
-{% endif %}
-
-</h2>
+  <div class="row">
+    <div class="col-md-6">
 {%if events or alerts %}
         {% if can_Add %}
         <form method="post" action="" style="padding-top:0em"> {% csrf_token %}
         {% endif %}
-
         {% if events %}
-            <h3>Events</h3>
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             {% for event in events %}
               <div class="panel panel-default">
@@ -81,8 +86,9 @@
         Please correct the error {{ form.errors|pluralize }} below.
     </p>
 {% endif %}
+  </div> <!--Bootstrap col-->
 
-
+  <div class="col-md-6">
 <form style="text-align: center;" action="" method="post">{% csrf_token %}
     <div class="panel panel-info">
       <div class="panel-heading">
@@ -95,5 +101,7 @@
       </div>
     </div>
 </form>
-
+  </div> <!--Bootstrap col-->
+</div> <!--Bootstrap row-->
+</div> <!--Bootstrap container-->
 {% endblock %}
